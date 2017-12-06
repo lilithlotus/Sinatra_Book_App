@@ -12,5 +12,11 @@
   <br />
 
   <label>Genre:</label>
-  <input type="radio" 
+  <% @genres.each do |genre| %>
+    <input type="radio" name="genre_id" value="<%= genre.id %>"><%= genre.name %></input>
+  <% end %>
+
+  <br />
+
+  <input type="submit" value="Create a Book">
 </form>
