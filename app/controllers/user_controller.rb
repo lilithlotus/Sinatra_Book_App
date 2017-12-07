@@ -1,6 +1,8 @@
 class UserController < ApplicationController
 
   get '/login' do
+    if logged_in?
+      redirect to '/books'
     erb :'users/login'
   end
 
@@ -16,6 +18,8 @@ class UserController < ApplicationController
   end
 
   get '/signup' do
+    if logged_in?
+      redirect to '/books'
     erb :'users/signup'
   end
 
@@ -29,4 +33,8 @@ class UserController < ApplicationController
     end
   end
 
+  get 'logout' do
+    session.clear
+    redirect to '/login'
+  end
 end
