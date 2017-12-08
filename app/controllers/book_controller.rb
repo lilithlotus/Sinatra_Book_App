@@ -17,9 +17,10 @@ class BookController < ApplicationController
     end
   end
 
+
   post '/books' do
     @book = Book.find_or_create_by(params)
-    @book.user = current_user
+    @book.users << current_user
     if @book.save
       redirect to "/books/#{@book.slug}"
     else
@@ -33,6 +34,7 @@ class BookController < ApplicationController
       erb :'books/show_book'
     else
       redirect to '/login'
+    end
   end
 
 
@@ -43,9 +45,12 @@ class BookController < ApplicationController
       erb :'books/edit'
     else
       redirect to '/login'
+    end
   end
 
   post '/books/:slug/edit' do
 
   end
+
+
 end
