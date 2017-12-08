@@ -2,17 +2,18 @@ class UserController < ApplicationController
 
   get '/login' do
     if logged_in?
-      redirect to '/books/new'
+      @user = current_user
+      redirect to "/users/#{@user.slug}"
     end
     erb :'users/login'
   end
 
   post '/login' do
-    user = User.find_by(:username => params[:username])
+    @user = User.find_by(:username => params[:username])
 
-    if user && user.authenticate(params[:password])
+    if @user && user.authenticate(params[:password])
         session[:user_id] = user.id
-        redirect "/books/new"
+        redirect to "/users/#{@user.slug}"
     else
         redirect "/login"
     end
@@ -20,7 +21,8 @@ class UserController < ApplicationController
 
   get '/signup' do
     if logged_in?
-      redirect to '/books/new'
+      @user = current_user
+      redirect to "/users/#{@user.slug}"
     end
     erb :'users/signup'
   end
@@ -29,7 +31,7 @@ class UserController < ApplicationController
     @user = User.new(params)
     if @user.save
       session[:user_id] = @user.id
-      redirect to '/books/new'
+      redirect to "/users/#{@user.slug}"
     else
       redirect to '/signup'
     end
@@ -42,6 +44,12 @@ class UserController < ApplicationController
 
   get '/users/:slug' do
     @user = User.find_by_slug(params[:slug])
+    @books = []
+    Book.all.each do |b|
+      if b.user_ids.include?(current_user.id)
+        @books << b
+      end
+    end
     erb :'users/show'
   end
 end

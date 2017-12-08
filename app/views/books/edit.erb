@@ -1,22 +1,22 @@
 <h1>Edit a Book</h1>
 
-<form method="post" action="/books/<%= @book.slug =>/edit">
+<form method="post" action="/books/<%= @book.slug %>/edit">
   <label>Book Title:</label>
-  <input type="text" name="name">
+  <input type="text" name="name" value="<%= @book.name %>">
 
   <br />
 
   <label>Book Author:</label>
-  <input type="text" name="author">
+  <input type="text" name="author" value="<%= @book.author %>">
 
   <br />
 
   <label>Genre:</label>
-  <% @genres.each do |genre| %>
+  <% Genre.all.each do |genre| %>
     <input type="radio" name="genre_id" value="<%= genre.id %>"><%= genre.name %></input>
   <% end %>
 
   <br />
 
-  <input type="submit" value="Create a Book">
+  <input type="submit" value="Edit Book">
 </form>

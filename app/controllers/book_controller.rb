@@ -28,6 +28,24 @@ class BookController < ApplicationController
     end
   end
 
+  get '/books/:slug/edit' do
+    @book = Book.find_by_slug(params[:slug])
+    if logged_in?
+      erb :'books/edit'
+    else
+      redirect to '/login'
+    end
+  end
+
+  post '/books/edit' do
+    @book = Book.find_by_slug(params[:slug])
+    @book.name = params[:name]
+    @book.author = params[:author]
+    @book.genre_id = params[:genre]
+    @book.save
+    redirect to "/books/#{@book.slug}"
+  end
+
   get '/books/:slug' do
     @book = Book.find_by_slug(params[:slug])
     if logged_in?
@@ -39,18 +57,7 @@ class BookController < ApplicationController
 
 
 
-  get '/books/:slug/edit' do
-    @book = Book.find_by_slug(params[:slug])
-    if logged_in?
-      erb :'books/edit'
-    else
-      redirect to '/login'
-    end
-  end
 
-  post '/books/:slug/edit' do
-
-  end
 
 
 end
