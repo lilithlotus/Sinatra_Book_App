@@ -1,6 +1,8 @@
 <% @books.each do |b| %>
+<!-- iterated through each book and creates the book name into a link to that book's show page -->
 <p><a href="/books/<%= b.slug %>"><%= b.name %></a></p>
 <% end %>
+
 
 <a href="/logout">Log Out</a>
 <a href="/users/<%= @user.slug %>">My Books</a>

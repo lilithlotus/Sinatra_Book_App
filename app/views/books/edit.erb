@@ -1,6 +1,8 @@
 <h1>Edit a Book</h1>
 
 <form method="post" action="/books/<%= @book.slug %>/edit">
+  <!-- posts information to /books/<%= @book.slug %>/edit -->
+  <!-- setting value for each input allows the current value assigned to the "name" to be displayed for user -->
   <label>Book Title:</label>
   <input type="text" name="name" value="<%= @book.name %>">
 
@@ -13,6 +15,7 @@
 
   <label>Genre:</label>
   <% Genre.all.each do |genre| %>
+  <!-- iterates through all genres, assigns each one to a radio button, and "checks" the one already assigned to the book -->
     <input type="radio" name="genre_id" value="<%= genre.id %>" <%='checked' if @book.genre_id = genre %> ><%= genre.name %></input>
   <% end %>
 

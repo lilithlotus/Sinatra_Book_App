@@ -3,9 +3,10 @@
 <p>Author: <%= @book.author %></p>
 
 <form method="post" action="/books/<%= @book.slug %>/delete">
+  <!-- posts to /books/<%= @book.slug %>/delete which will delete object and then redirect to book list -->
   <input type="submit" value="Delete Book">
 </form>
-
+<!-- links to other user pages -->
 <p><a href="/books/<%= @book.slug %>/edit">Edit Book</a></p>
 <a href="/logout">Log Out</a>
 <a href="/users/<%= @user.slug %>">My Books</a>

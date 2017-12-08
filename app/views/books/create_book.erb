@@ -1,6 +1,7 @@
 <h1>Add a Book to Your Collection</h1>
-
+<!-- -->
 <form method="post" action="/books">
+  <!-- post info entered in for to /books -->
   <label>Book Title:</label>
   <input type="text" name="name">
 
@@ -13,6 +14,7 @@
 
   <label>Genre:</label>
   <% @genres.each do |genre| %>
+  <!-- iterates through all genres and assigns each one to a radio button -->
     <input type="radio" name="genre_id" value="<%= genre.id %>"><%= genre.name %></input>
   <% end %>
 

@@ -1,4 +1,4 @@
 class BookGenre < ActiveRecord::Base
-  has_many :books
-  has_many :genres
+  belongs_to :book
+  belongs_to :genres
 end
