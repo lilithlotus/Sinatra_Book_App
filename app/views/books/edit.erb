@@ -13,7 +13,7 @@
 
   <label>Genre:</label>
   <% Genre.all.each do |genre| %>
-    <input type="radio" name="genre_id" value="<%= genre.id %>"><%= genre.name %></input>
+    <input type="radio" name="genre_id" value="<%= genre.id %>" <%='checked' if @book.genre_id = genre %> ><%= genre.name %></input>
   <% end %>
 
   <br />

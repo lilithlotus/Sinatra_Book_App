@@ -37,7 +37,7 @@ class BookController < ApplicationController
     end
   end
 
-  post '/books/edit' do
+  post '/books/:slug/edit' do
     @book = Book.find_by_slug(params[:slug])
     @book.name = params[:name]
     @book.author = params[:author]
@@ -47,6 +47,7 @@ class BookController < ApplicationController
   end
 
   get '/books/:slug' do
+    @user = current_user
     @book = Book.find_by_slug(params[:slug])
     if logged_in?
       erb :'books/show_book'
@@ -55,7 +56,25 @@ class BookController < ApplicationController
     end
   end
 
+  get '/books/users/:slug' do
+    @user = User.find_by_slug(params[:slug])
+    @books = []
+    Book.all.each do |b|
+      if b.user_ids.include?(current_user.id)
+        @books << b
+      end
+    end
+    erb :'users/show'
+  end
 
+  post '/books/:slug/delete' do
+    @user = current_user
+    @book = Book.find_by_slug(params[:slug])
+    if @book.user_ids.include?(current_user.id)
+      @book.destroy
+    end
+    redirect to "books/users/${@user.slug}"
+  end
 
 
 

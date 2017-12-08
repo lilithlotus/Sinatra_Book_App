@@ -1,5 +1,7 @@
+<h1>Welcome, Here Are Your Books </h1>
+<p>Please add a book, or click an existing book to edit it.</p>
 <% @books.each do |b| %>
-<p><%= b.name %></p>
+<p><a href="/books/<%= b.slug %>"><%= b.name %></a></p>
 <% end %>
-
+<a href="/books/new">Add a Book</a>
 <a href="/logout">Log Out</a>
