@@ -16,7 +16,7 @@
   <label>Genre:</label>
   <% Genre.all.each do |genre| %>
   <!-- iterates through all genres, assigns each one to a radio button, and "checks" the one already assigned to the book -->
-    <input type="radio" name="genre_id" value="<%= genre.id %>" <%='checked' if @book.genre_id = genre %> ><%= genre.name %></input>
+    <input type="radio" name="genre_id" value="<%= genre.id %>" <%='checked' if @book.genre_id = genre.id %> ><%= genre.name %></input>
   <% end %>
 
   <br />
