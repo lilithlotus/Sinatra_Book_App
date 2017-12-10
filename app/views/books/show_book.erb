@@ -2,7 +2,9 @@
 <p>Title: <%= @book.name %></p>
 <p>Author: <%= @book.author %></p>
 
+
 <form method="post" action="/books/<%= @book.slug %>/delete">
+  <input type="hidden" name="_method" value="delete">
   <!-- posts to /books/<%= @book.slug %>/delete which will delete object and then redirect to book list -->
   <input type="submit" value="Delete Book">
 </form>

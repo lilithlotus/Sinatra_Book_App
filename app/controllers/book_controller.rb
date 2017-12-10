@@ -10,6 +10,7 @@ class BookController < ApplicationController
   end
 
   get '/books/new' do
+    @user = current_user
     @genres = Genre.all
     if logged_in?
       #if logged in takes user to form to create a new book, otherwise redirects to login page
@@ -40,7 +41,7 @@ class BookController < ApplicationController
     end
   end
 
-  post '/books/:slug/edit' do
+  patch '/books/:slug/edit' do
     #updates book information
     @book = Book.find_by_slug(params[:slug])
     @book.name = params[:name]
@@ -64,7 +65,7 @@ class BookController < ApplicationController
     @user = User.find_by_slug(params[:slug])
     @books = []
     Book.all.each do |b|
-      if b.user_id == @user.id
+      if b.user == @user
         @books << b
       end
     end
@@ -72,13 +73,13 @@ class BookController < ApplicationController
     erb :'users/show'
   end
 
-  post '/books/:slug/delete' do
+  delete '/books/:slug/delete' do
     @user = current_user
     #deletes book if user has that book
     @book = Book.find_by_slug(params[:slug])
-    if @book.user_id == @user.id
+
       @book.destroy
-    end
+    
     redirect to "books/users/${@user.slug}"
   end
 
