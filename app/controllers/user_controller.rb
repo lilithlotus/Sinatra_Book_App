@@ -52,7 +52,7 @@ class UserController < ApplicationController
     @user = User.find_by_slug(params[:slug])
     @books = []
     Book.all.each do |b|
-      if b.user_ids.include?(current_user.id)
+      if b.user_id == @user.id
         @books << b
       end
     end

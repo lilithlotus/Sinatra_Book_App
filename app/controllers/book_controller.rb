@@ -21,10 +21,8 @@ class BookController < ApplicationController
 
 
   post '/books' do
-    @book = Book.find_or_create_by(params)
-    #finds the book by all criteria if it exists or creates it if it does not
-    @book.users << current_user
-    # adds the user if to the array of users that have added this book
+    @book = Book.create(params)
+    #creates book
     if @book.save
       redirect to "/books/#{@book.slug}"
     else
@@ -66,7 +64,7 @@ class BookController < ApplicationController
     @user = User.find_by_slug(params[:slug])
     @books = []
     Book.all.each do |b|
-      if b.user_ids.include?(current_user.id)
+      if b.user_id == @user.id
         @books << b
       end
     end
@@ -78,7 +76,7 @@ class BookController < ApplicationController
     @user = current_user
     #deletes book if user has that book
     @book = Book.find_by_slug(params[:slug])
-    if @book.user_ids.include?(current_user.id)
+    if @book.user_id == @user.id
       @book.destroy
     end
     redirect to "books/users/${@user.slug}"
