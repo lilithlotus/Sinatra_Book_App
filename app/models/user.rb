@@ -1,6 +1,7 @@
 class User < ActiveRecord::Base
   has_many :books
-  validates_presence_of :name, :username, :password, :email
+  validates :name, :username, :email, presence: true
+  validates :username, uniqueness: true
   has_secure_password
 
   def slug

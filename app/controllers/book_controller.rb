@@ -32,23 +32,40 @@ class BookController < ApplicationController
   end
 
   get '/books/:slug/edit' do
-    @book = Book.find_by_slug(params[:slug])
     if logged_in?
+      if @book = current_user.books.find_by_slug(params[:slug])
       #if logged in takes user to book edit form, if not takes user to login
-      erb :'books/edit'
+        erb :'books/edit'
+      else
+        redirect to '/books'
+      end
     else
       redirect to '/login'
     end
   end
 
+  #form submits
+  #the request to the server
+  #rack intercepts the request
+  #then passes the request to the controllers
+  #sthen the controllers process the HTTP verb and url and try to match it
+
   patch '/books/:slug/edit' do
     #updates book information
-    @book = Book.find_by_slug(params[:slug])
-    @book.name = params[:name]
-    @book.author = params[:author]
-    @book.genre_id = params[:genre]
-    @book.save
-    redirect to "/books/#{@book.slug}"
+    if logged_in?
+      if @book = current_user.books.find_by_slug(params[:slug])
+        @book.update(params[:book])
+        #@book.name = params[:name]
+        #@book.author = params[:author]
+        #@book.genre_id = params[:genre]
+        #@book.save
+        redirect to "/books/#{@book.slug}"
+      else
+        redirect to '/books'
+      end
+    else
+      redirect to '/login'
+    end
   end
 
   get '/books/:slug' do
@@ -77,9 +94,7 @@ class BookController < ApplicationController
     @user = current_user
     #deletes book if user has that book
     @book = Book.find_by_slug(params[:slug])
-
       @book.destroy
-    
     redirect to "books/users/${@user.slug}"
   end
 

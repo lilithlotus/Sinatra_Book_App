@@ -4,19 +4,19 @@
   <input type="hidden" name="_method" value="patch">
   <!-- setting value for each input allows the current value assigned to the "name" to be displayed for user -->
   <label>Book Title:</label>
-  <input type="text" name="name" value="<%= @book.name %>">
+  <input type="text" name="book[name]" value="<%= @book.name %>">
 
   <br />
 
   <label>Book Author:</label>
-  <input type="text" name="author" value="<%= @book.author %>">
+  <input type="text" name="book[author]" value="<%= @book.author %>">
 
   <br />
 
   <label>Genre:</label>
   <% Genre.all.each do |genre| %>
   <!-- iterates through all genres, assigns each one to a radio button, and "checks" the one already assigned to the book -->
-    <input type="radio" name="genre_id" value="<%= genre.id %>" <%='checked' if @book.genre == genre %> ><%= genre.name %></input>
+    <input type="radio" name="book[genre_id]" value="<%= genre.id %>" <%='checked' if @book.genre == genre %> ><%= genre.name %></input>
   <% end %>
 
   <br />

@@ -18,12 +18,13 @@ class ApplicationController < Sinatra::Base
   helpers do
       def logged_in?
       #helper moethod to determine if user if logged in, not, not session is user_id
-        !!session[:user_id]
+        !!current_user
       end
 
-      def current_user
+      def current_user #+> <User #eararrarsarr name=> || nil
         #returns the User_id for current user by looking at session hash
-        User.find(session[:user_id])
+        # memoization
+        @current_user ||= User.find_by(id: session[:user_id]) if session[:user_id]
       end
     end
 
